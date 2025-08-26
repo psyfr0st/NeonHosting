@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Neon Hosting",
     description: "Hospedagem escalável com performance de topo 🚀",
-    url: "https://host.neoncore.xyz",
+    url: "https://neoncore.xyz",
     siteName: "Neon Hosting",
     images: [
       {
-        url: "https://host.neoncore.xyz/NH.webp",
+        url: "https://neoncore.xyz/sample.png",
         width: 512,
         height: 512,
         alt: "Neon Hosting Preview",
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Neon Hosting",
     description: "Hospedagem escalável com performance de topo 🚀",
-    images: ["https://host.neoncore.xyz/NH.webp"],
+    images: ["https://neoncore.xyz/sample.png"],
     creator: "@neonforge",
   },
   icons: {
-    icon: "./favicon.ico",
+    icon: "/favicon.ico",
   },
 };
 

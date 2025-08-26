@@ -15,7 +15,7 @@ import {
   FaExternalLinkAlt,
 } from "react-icons/fa";
 import NavBar from "@/components/ui/navBar";
-import { LargeButton, LargeLink } from "@/components/ui/buttons";
+import { DefaultButton, LargeLink } from "@/components/ui/buttons";
 
 // === 🔥 Keyframes para neon, glitch, etc ===
 const glitch = keyframes`

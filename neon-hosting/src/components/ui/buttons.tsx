@@ -10,12 +10,12 @@ type ButtonContentProps = {
   value: string
 };
 
-type LargeButtonProps = ButtonContentProps & {
+type ButtonProps = ButtonContentProps & {
   onClick: MouseEventHandler<HTMLButtonElement>,
   className?: string
 };
 
-type LargeLinkProps = ButtonContentProps & {
+type LinkProps = ButtonContentProps & {
   href: string,
   className?: string
 };
@@ -26,16 +26,6 @@ function ButtonContent({ Icon, value }: ButtonContentProps) {
   </>);
 };
 
-function LargeButton({ onClick, className, ...restProps }: LargeButtonProps) {
-  return (
-    <button
-      className="border-2 border-red-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-red-500/10 transition-all inline-flex items-center justify-center"
-      onClick={onClick}
-    >
-      <ButtonContent {...restProps}/>
-    </button>
-  );
-};
 
 const LinkStyle = styled.div`
   background: linear-gradient(45deg, #ff0000, #ff3333);
@@ -55,13 +45,24 @@ const LinkStyle = styled.div`
 `;
 
 
-function DefaultLink({ href, className, ...restProps }: LargeLinkProps) {
+function DefaultLink({ href, className, ...restProps }: LinkProps) {
   return (
     <Link href={href}>
       <LinkStyle className={className}>
         <ButtonContent {...restProps}/>
       </LinkStyle>
     </Link>
+  );
+};
+
+function DefaultButton({ onClick, className, ...restProps }: ButtonProps) {
+  return (
+    <button
+      className={`${className} border-2 border-red-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-red-500/10 transition-all inline-flex items-center justify-center`}
+      onClick={onClick}
+    >
+      <ButtonContent {...restProps}/>
+    </button>
   );
 };
 
@@ -73,5 +74,8 @@ const MediumLink = styled(DefaultLink)`
   padding: 0.5rem 1rem;
 `;
 
+const ButtonForPlan = styled(DefaultButton)`
 
-export { LargeButton, LargeLink, MediumLink };
+`;
+
+export { DefaultButton, LargeLink, MediumLink, ButtonForPlan };

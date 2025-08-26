@@ -3,7 +3,8 @@
 import styled, { keyframes } from "styled-components";
 import { FaBars, FaServer } from "react-icons/fa";
 import { useState } from "react";
-import Icon from '@/../public/NH.webp'
+import Icon from "@/../public/NH.webp";
+import LanguageCurrencySelector from "@/components/ui/language";
 import Image from "next/image";
 
 function NavBar() {
@@ -14,10 +15,17 @@ function NavBar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <Image src={Icon} width={50} height={50} alt="logo" className="drop-shadow-[0_0_10px_#ff0000]"/>
+            <Image
+              src={Icon}
+              width={50}
+              height={50}
+              alt="logo"
+              className="drop-shadow-[0_0_10px_#ff0000]"
+            />
             <h1 className="text-2xl font-bold text-red-500 drop-shadow-[0_0_10px_red]">
               NeonHost
             </h1>
+            <LanguageCurrencySelector />
           </div>
 
           {/* Desktop Menu */}
@@ -40,7 +48,15 @@ function NavBar() {
             <a href="#faq" className="hover:text-red-400 transition-colors">
               FAQ
             </a>
-            <button className="bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white font-semibold px-6 py-2 rounded-full shadow-[0_0_20px_red] transition-all">
+            <button
+              onClick={() => {
+                const target = document.getElementById("CTA");
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+              className="bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white font-semibold px-6 py-2 rounded-full shadow-[0_0_20px_red] transition-all"
+            >
               Começar Agora
             </button>
           </div>
