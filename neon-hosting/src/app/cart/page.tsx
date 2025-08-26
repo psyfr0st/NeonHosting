@@ -29,6 +29,7 @@ import { AiFillBank } from "react-icons/ai";
 import { GiConfirmed } from "react-icons/gi";
 
 import CartElement from "@/pages/Cart/cart";
+import InfoElement from "@/pages/Cart/information";
 import CartSummary from "@/pages/Cart/details";
 
 const servicesData = [
@@ -197,11 +198,11 @@ const servicesData = [
 ];
 
 const product = {
-  name: "Plano Starter",
-  price: 9.99,
+  name: "Plano Profissional",
+  price: 29.99,
 };
 
-const discountPreset = .0;
+const discountPreset = 0.0;
 
 const calculateCart = (baseProduct: any, selectedServices: any[]) => {
   // subtotal começa com o preço do produto principal
@@ -227,6 +228,16 @@ function CartPage() {
     product,
     Object.values(selectedServices)
   );
+  const [selectedCountry, setSelectedCountry] = useState("Portugal");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    localidade: "",
+    cep: "",
+    idNumber: "",
+    celNumber: "",
+    birthDate: "",
+  });
 
   const selectedServicesArray = Object.values(selectedServices).map(
     (s: any) => ({
@@ -259,6 +270,8 @@ function CartPage() {
               total={total}
               selectedServices={selectedServicesArray} // se quiser mostrar os serviços selecionados
               discountPreset={discountPreset}
+              next={next}
+              type="next"
             />
           }
         />
@@ -268,7 +281,27 @@ function CartPage() {
       id: 2,
       Icon: FaAddressCard,
       title: "Dados Pessoais",
-      component: <h1>DADOS</h1>,
+      component: (
+        <InfoElement
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+          formData={formData}
+          setFormData={setFormData}
+          CardElement={
+            <CartSummary
+              product={product}
+              subtotal={subtotal}
+              additionalTotal={additionalTotal}
+              discount={discount}
+              total={total}
+              selectedServices={selectedServicesArray} // se quiser mostrar os serviços selecionados
+              discountPreset={discountPreset}
+              next={next}
+              type="next"
+            />
+          }
+        />
+      ),
     },
     {
       id: 3,

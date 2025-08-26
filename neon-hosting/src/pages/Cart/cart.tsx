@@ -133,7 +133,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         <div className="flex flex-wrap gap-2 mt-2">
           {service.options.map((opt: any) => {
             const isSelected =
-              selectedOption?.name === `${service.title}.${opt.name}`;
+              selectedOption?.name === `${service.title} - ${opt.name}`;
             return (
               <div
                 key={opt.name}
@@ -143,7 +143,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
                     service.id,
                     {
                       ...opt,
-                      name: `${service.title}.${opt.name}`,
+                      name: `${service.title} - ${opt.name}`,
                       desc: opt.desc || service.desc,
                     },
                     null

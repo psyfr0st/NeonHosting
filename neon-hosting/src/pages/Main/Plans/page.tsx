@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import styled from "styled-components";
+import { MediumButton } from "@/components/ui/buttons";
+import PlanCard from "./plancard";
 
 const Section = styled.section`
   min-height: 100vh;
@@ -12,6 +14,139 @@ const Section = styled.section`
   background: black;
   text-align: center;
 `;
+
+export const defaultPlan = 1;
+
+type DataPlans<S = string> = Record<string, {
+  id: number,
+  colorDesc: S,
+  textColorDesc: S,
+  content: Record<"fixed" | "payg", {
+    title: S,
+    price: S,
+    period: S,
+    desc: S,
+    extraInfo: S | false,
+    list: Array<S>
+  }>
+}>
+
+const dataPlans: DataPlans = { // provisório (deve estar armazenado no banco de dados)
+  standart: {
+    id: 0, //Id para para definir as opções na página de carrinho
+    colorDesc: "bg-zinc-700",
+    textColorDesc: "text-white",
+    content: {
+      fixed: {
+        title: "Básico",
+        price: "9,99€",
+        extraInfo: false,
+        period: "mês",
+        desc: "Recomendado para projetos pequenos",
+        list: [
+          "✅ 1 GB Espaço em Disco",
+          "✅ 100 GB Tráfego Mensal",
+          "✅ 1 Domínio",
+          "❌ Suporte por email (limitado)"
+        ]
+      },
+      payg: {
+        title: "Starter",
+        desc: "Mais Econômico",
+        price: "0,25€",
+        extraInfo: "~180€/mês (24/7)",
+        period: "hora",
+        list: [
+          "✅ 1 vCPU",
+          "✅ 2 GB RAM",
+          "✅ 40 GB SSD",
+          "✅ 2 TB Transferência",
+          "✅ Pague apenas pelo uso",
+        ]
+      }
+    }
+  },
+  profissional: {
+    id: 1, //Id para para definir as opções na página de carrinho
+    colorDesc: "bg-red-500",
+    textColorDesc: "text-black",
+    content: {
+      fixed: {
+        title: "Profissional",
+        price: "29,99€",
+        period: "mês",
+        desc: "Mais Popular",
+        extraInfo: false,
+        list: [
+          "✅ 50 GB Espaço em Disco",
+          "✅ 1 TB Tráfego Mensal",
+          "✅ 10 Domínios",
+          "✅ 100 E-mails",
+          "✅ Backup Diário",
+          "✅ Suporte 24/7 por email/chat"
+        ]
+      },
+      payg: {
+        title: "Standard",
+        price: "0,50€",
+        period: "hora",
+        desc: "Equilíbrio Perfeito",
+        extraInfo: "~360€/mês (24/7)",
+        list: [
+          "✅ 2 vCPU",
+          "✅ 4 GB RAM",
+          "✅ 80 GB SSD",
+          "✅ 4 TB Transferência",
+          "✅ Auto-scaling",
+          "✅ Monitoramento Avançado",
+        ]
+      }
+    }
+  },
+  enterprise: {
+    id: 2, //Id para para definir as opções na página de carrinho
+    colorDesc: "bg-red-700",
+    textColorDesc: "text-white",
+    content: {
+      fixed: {
+        title: "Enterprise",
+        period: "mês",
+        price: "69,99€",
+        desc: "Recomendado para empresas",
+        extraInfo: false,
+        list: [
+          "✅ 100 GB Espaço",
+          "✅ Tráfego Ilimitado",
+          "✅ Domínios Ilimitados",
+          "✅ E-mails Ilimitados",
+          "✅ SSL + Firewall Avançado",
+          "✅ Backups horários + retenção de 30 dias",
+          "✅ Gestor de conta dedicado + suporte 24/7",
+        ]
+      },
+      payg: {
+        title: "Performance",
+        period: "ano",
+        price: "1,00€",
+        desc: "Alto Desempenho",
+        extraInfo: "~1.080€/mês (24/7)",
+        list: [
+          "✅ 4 vCPU",
+          "✅ 8 GB RAM",
+          "✅ 160 GB SSD NVMe",
+          "✅ 8 TB Transferência",
+          "✅ Load Balancer",
+          "✅ Suporte 24/7 Prioritário",
+        ]
+      }
+    }
+  }
+};
+
+const planButtons = {
+  fixed: "Selecionar Plano",
+  payg: "Começar Agora"
+}
 
 export default function Plans() {
   const [planType, setPlanType] = useState<"fixed" | "payg">("fixed");
@@ -65,150 +200,14 @@ export default function Plans() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {planType === "fixed" ? (
-            <>
-              {/* Plano Básico */}
-              <div className="relative rounded-2xl p-8 bg-zinc-900 border border-zinc-800 flex flex-col">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-700 text-white text-xs px-3 py-1 rounded-full">
-                  Recomendado para projetos pequenos
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Básico</h3>
-                <div className="text-4xl font-bold mb-6">
-                  9,99€ <span className="text-lg text-gray-400">/mês</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 1 GB Espaço em Disco</li>
-                  <li>✅ 100 GB Tráfego Mensal</li>
-                  <li>✅ 1 Domínio</li>
-                  <li>❌ Suporte por email (limitado)</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all">
-                  Selecionar Plano
-                </button>
-              </div>
+          {Object.entries(dataPlans).map(([_, { id, colorDesc, textColorDesc, content }]) => {
+            const data = useMemo(() => content[planType], [planType]);
 
-              {/* Profissional */}
-              <div className="rounded-2xl p-8 bg-zinc-900 border border-red-500 shadow-[0_0_20px_rgba(255,0,0,0.4)] relative flex flex-col">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-500 text-black text-xs px-3 py-1 rounded-full">
-                  Mais Popular
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Profissional</h3>
-                <div className="text-4xl font-bold mb-6">
-                  29,99€ <span className="text-lg text-gray-400">/mês</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 50 GB Espaço em Disco</li>
-                  <li>✅ 1 TB Tráfego Mensal</li>
-                  <li>✅ 10 Domínios</li>
-                  <li>✅ 100 E-mails</li>
-                  <li>✅ Backup Diário</li>
-                  <li>✅ Suporte 24/7 por email/chat</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full bg-red-500 py-3 rounded-full text-black font-semibold hover:bg-red-700 transition-all">
-                  Selecionar Plano
-                </button>
-              </div>
-
-              {/* Enterprise */}
-              <div className="relative rounded-2xl p-8 bg-zinc-900 border border-zinc-800 flex flex-col">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-                  Recomendado para empresas
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Enterprise</h3>
-                <div className="text-4xl font-bold mb-6">
-                  69,99€ <span className="text-lg text-gray-400">/mês</span>
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 100 GB Espaço</li>
-                  <li>✅ Tráfego Ilimitado</li>
-                  <li>✅ Domínios Ilimitados</li>
-                  <li>✅ E-mails Ilimitados</li>
-                  <li>✅ SSL + Firewall Avançado</li>
-                  <li>✅ Backups horários + retenção de 30 dias</li>
-                  <li>✅ Gestor de conta dedicado + suporte 24/7</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all">
-                  Selecionar Plano
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Starter */}
-              <div className="rounded-2xl p-8 bg-zinc-900 border border-zinc-800 shadow-lg shadow-zinc-800/40 flex flex-col relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-zinc-700 text-white text-xs px-3 py-1 rounded-full">
-                  Mais Econômico
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Starter</h3>
-                <div className="text-4xl font-bold mb-2">
-                  0,25€ <span className="text-lg text-gray-400">/hora</span>
-                </div>
-                <div className="text-sm text-gray-400 mb-6">
-                  ~180€/mês (24/7)
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 1 vCPU</li>
-                  <li>✅ 2 GB RAM</li>
-                  <li>✅ 40 GB SSD</li>
-                  <li>✅ 2 TB Transferência</li>
-                  <li>✅ Pague apenas pelo uso</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all">
-                  Começar Agora
-                </button>
-              </div>
-
-              {/* Standard */}
-              <div className="rounded-2xl p-8 bg-zinc-900 border border-red-500 shadow-[0_0_25px_rgba(255,0,0,0.5)] relative flex flex-col">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-500 text-black text-xs px-3 py-1 rounded-full">
-                  Equilíbrio Perfeito
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Standard</h3>
-                <div className="text-4xl font-bold mb-2">
-                  0,50€ <span className="text-lg text-gray-400">/hora</span>
-                </div>
-                <div className="text-sm text-gray-400 mb-6">
-                  ~360€/mês (24/7)
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 2 vCPU</li>
-                  <li>✅ 4 GB RAM</li>
-                  <li>✅ 80 GB SSD</li>
-                  <li>✅ 4 TB Transferência</li>
-                  <li>✅ Auto-scaling</li>
-                  <li>✅ Monitoramento Avançado</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full bg-red-500 py-3 rounded-full text-black font-semibold hover:bg-red-700 transition-all">
-                  Começar Agora
-                </button>
-              </div>
-
-              {/* Performance */}
-              <div className="rounded-2xl p-8 bg-zinc-900 border border-zinc-800 shadow-lg shadow-zinc-800/40 flex flex-col relative">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-700 text-white text-xs px-3 py-1 rounded-full">
-                  Alto Desempenho
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Performance</h3>
-                <div className="text-4xl font-bold mb-2">
-                  1,00€ <span className="text-lg text-gray-400">/hora</span>
-                </div>
-                <div className="text-sm text-gray-400 mb-6">
-                  ~1.080€/mês (24/7)
-                </div>
-                <ul className="space-y-3 mb-8 text-gray-300">
-                  <li>✅ 4 vCPU</li>
-                  <li>✅ 8 GB RAM</li>
-                  <li>✅ 160 GB SSD NVMe</li>
-                  <li>✅ 8 TB Transferência</li>
-                  <li>✅ Load Balancer</li>
-                  <li>✅ Suporte 24/7 Prioritário</li>
-                </ul>
-                <button className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all">
-                  Começar Agora
-                </button>
-              </div>
-            </>
-          )}
+            return (<PlanCard 
+              key={`plan.${id}`}
+              {...{ id, colorDesc, textColorDesc, ...data, planType}}
+            />);
+          })}
         </div>
       </div>
     </Section>

@@ -13,25 +13,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neon Hosting - Web Hosting",
-  description: "Hospedagem rápida, segura e escalável. Pague apenas pelo uso ou Planos Fixos.",
-  keywords: ["web hosting", "servidor barato", "hospedagem"],
-  authors: [{ name: "NeonCore" }],
+  title: "Neon Hosting - Hospedagem Premium e Escalável",
+  description:
+    "Hospedagem ultra rápida, segura e com tecnologia de ponta. Planos flexíveis ou pay-as-you-go — só paga pelo que usa. Escale seu projeto sem limites 🚀",
+  keywords: [
+    "hospedagem de sites",
+    "web hosting rápido",
+    "servidor dedicado",
+    "cloud barato",
+    "hospedagem segura",
+    "neon hosting",
+  ],
+  authors: [{ name: "NeonCore Studios" }],
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "Neon Hosting",
-    description: "Hospedagem escalável com performance de topo 🚀",
-    url: "https://neoncore.xyz",
+    title: "Neon Hosting - Escale Seu Projeto Sem Limites 🚀",
+    description:
+      "Velocidade, segurança e performance de topo. Escolha entre planos fixos ou flexíveis e tenha a liberdade de crescer quando precisar.",
+    url: "https://host.neoncore.xyz",
     siteName: "Neon Hosting",
     images: [
       {
-        url: "https://neoncore.xyz/sample.png",
-        width: 512,
-        height: 512,
-        alt: "Neon Hosting Preview",
+        url: "https://host.neoncore.xyz/sample.png",
+        width: 1726,
+        height: 1065,
+        alt: "Prévia da Neon Hosting - Hospedagem Premium",
       },
     ],
     locale: "pt_PT",
@@ -39,15 +48,17 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neon Hosting",
-    description: "Hospedagem escalável com performance de topo 🚀",
-    images: ["https://neoncore.xyz/sample.png"],
-    creator: "@neonforge",
+    title: "Neon Hosting ⚡ Hospedagem Rápida e Segura",
+    description:
+      "Hospedagem escalável com performance profissional. Pague apenas pelo uso ou escolha um plano fixo sob medida para o seu projeto.",
+    images: ["https://host.neoncore.xyz/sample.png"],
+    creator: "@neoncorestudios",
   },
   icons: {
     icon: "/favicon.ico",
   },
 };
+
 
 
 export default function RootLayout({

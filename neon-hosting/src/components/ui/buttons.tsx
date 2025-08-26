@@ -6,7 +6,8 @@ import Link from "next/link";
 import styled from "styled-components";
 
 type ButtonContentProps = {
-  Icon: IconType,
+  left?: boolean,
+  Icon?: IconType,
   value: string
 };
 
@@ -20,9 +21,11 @@ type LinkProps = ButtonContentProps & {
   className?: string
 };
 
-function ButtonContent({ Icon, value }: ButtonContentProps) {
+function ButtonContent({ Icon, value, left }: ButtonContentProps) {
   return (<>
-    <Icon className="mr-2" /> {value}
+    {left && Icon && <Icon className="mr-2" />}
+    {value}
+    {!left && Icon && <Icon className="mr-2" />}
   </>);
 };
 
@@ -58,13 +61,28 @@ function DefaultLink({ href, className, ...restProps }: LinkProps) {
 function DefaultButton({ onClick, className, ...restProps }: ButtonProps) {
   return (
     <button
-      className={`${className} border-2 border-red-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-red-500/10 transition-all inline-flex items-center justify-center`}
+      className={`rounded-full inline-flex items-center justify-center ${className}`}
       onClick={onClick}
     >
       <ButtonContent {...restProps}/>
     </button>
   );
 };
+
+function LargeButton({ className, ...restProps }: ButtonProps) {
+  return (<DefaultButton 
+    className={`text-lg font-semibold border-2 border-red-500 px-8 py-4  hover:bg-red-500/10 transition-all ${className}`}
+    {...restProps}
+  />);
+}
+
+function MediumButton({ className, ...restProps }: ButtonProps) {
+  return (<DefaultButton 
+    className={`text-base w-full border-2 border-red-500 py-3 hover:bg-red-500/50 transition-all hover:cursor-pointer ${className}`}
+    {...restProps}
+  />);
+}
+
 
 const LargeLink = styled(DefaultLink)`
   padding: 1rem 2rem;
@@ -78,4 +96,4 @@ const ButtonForPlan = styled(DefaultButton)`
 
 `;
 
-export { DefaultButton, LargeLink, MediumLink, ButtonForPlan };
+export { DefaultButton, LargeButton, MediumButton, LargeLink, MediumLink, ButtonForPlan };
