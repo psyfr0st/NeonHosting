@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import styled from "styled-components";
-import { DefaultButton  } from "@/components/ui/buttons";
 
 const Section = styled.section`
   min-height: 100vh;
@@ -128,11 +127,9 @@ export default function Plans() {
                   <li>✅ Backups horários + retenção de 30 dias</li>
                   <li>✅ Gestor de conta dedicado + suporte 24/7</li>
                 </ul>
-                <DefaultButton 
-                  onClick={() => {}} 
-                  className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all"
-                  value="Selecionar Plano"
-                />
+                <button className="hover:cursor-pointer mt-auto w-full border-2 border-red-500 py-3 rounded-full hover:bg-red-500/50 transition-all">
+                  Selecionar Plano
+                </button>
               </div>
             </>
           ) : (
